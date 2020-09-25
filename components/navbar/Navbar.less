@@ -1,0 +1,21 @@
+@import '../../styles/general.less';
+
+.navbar {
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    &:extend(.container);
+  }
+
+  &__nav {
+    display: flex;
+    padding: 0;
+    width: 400px;
+    justify-content: space-between;
+  }
+  &__nav-item {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}

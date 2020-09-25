@@ -1,0 +1,21 @@
+@import '../../styles/general.less';
+.weather {
+  &__container {
+    &:extend(.container);
+  }
+  &__header {
+    margin-top: 100px;
+    text-align: center;
+  }
+  &__details {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__details-item {
+    list-style-type: none;
+  }
+}

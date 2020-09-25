@@ -32,3 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+#My config file
+/config
