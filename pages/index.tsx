@@ -4,10 +4,12 @@ import Cities from '../components/cities/Cities';
 import { GetServerSideProps } from 'next';
 import { CityDTO } from '../dtos/city.dto';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCitiesSuccess } from '../store/actions/cities';
+import { fetchCitiesSuccess, clearModal, editCityRequest } from '../store/actions/cities';
 import { useEffect } from 'react';
 import { fetchCitiesRequest } from '../store/sagas/city.saga';
 import { CityStateDTO } from '../dtos/city-state.dto';
+import { EditModal } from '../components/edit-modal/EditModal';
+import { EditModalDTO } from '../dtos/edit-modal.dto';
 
 export default function Home({ cities: citiesProps }) {
   const dispatch = useDispatch()
@@ -18,10 +20,16 @@ export default function Home({ cities: citiesProps }) {
       dispatch(fetchCitiesRequest());
     }
   }, [])
-
+  const closeEditModal = () => {
+    dispatch(clearModal())
+  }
+  const updateCity = (city: CityDTO) => {
+    console.log(city);
+    dispatch(editCityRequest(city));
+    closeEditModal()
+  }
   const cities: { cities: CityDTO[] } = useSelector((state: CityStateDTO) => state);
-
-  console.log(cities)
+  const edit: EditModalDTO = useSelector(((state: CityStateDTO) => state.editModal))
   return (
     <div>
       <Head>
@@ -33,7 +41,9 @@ export default function Home({ cities: citiesProps }) {
         <Navbar />
         <Cities cities={cities.cities} />
       </div>
+      {edit.city && <EditModal update={updateCity} editedCity={edit.city} clear={closeEditModal} />}
     </div>
+
   );
 }
 
