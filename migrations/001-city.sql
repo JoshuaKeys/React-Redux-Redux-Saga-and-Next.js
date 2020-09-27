@@ -1,6 +1,5 @@
 -- Up
-CREATE TABLE
-IF NOT EXISTS City
+CREATE TABLE City
 (
     id INTEGER PRIMARY KEY,
     name TEXT

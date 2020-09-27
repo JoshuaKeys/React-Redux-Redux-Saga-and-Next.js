@@ -6,8 +6,6 @@ async function setup() {
     filename: './mydb.sqlite',
     driver: sqlite3.Database,
   });
-  await db.migrate({ force: 'last' });
-
-  const city = await db.all('SELECT * from city');
+  await db.migrate({ force: true });
 }
 setup();

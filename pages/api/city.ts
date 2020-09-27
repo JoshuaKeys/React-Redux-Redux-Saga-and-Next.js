@@ -60,6 +60,7 @@ async function fetchCities(req: NextApiRequest, res: NextApiResponse, db: Databa
     const cities = await db.all('SELECT * FROM city');
     return res.json(cities)
   } catch (err) {
+    console.log(err);
     res.status(500).send("Server Error")
   }
 
