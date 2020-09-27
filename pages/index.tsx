@@ -4,9 +4,9 @@ import Cities from '../components/cities/Cities';
 import { GetServerSideProps } from 'next';
 import { CityDTO } from '../dtos/city.dto';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCitiesSuccess, clearModal, editCityRequest } from '../store/actions/cities';
+import { fetchCitiesSuccess, clearModal, editCityRequest, fetchCitiesRequest } from '../store/actions/cities';
 import { useEffect } from 'react';
-import { fetchCitiesRequest } from '../store/sagas/city.saga';
+
 import { CityStateDTO } from '../dtos/city-state.dto';
 import { EditModal } from '../components/edit-modal/EditModal';
 import { EditModalDTO } from '../dtos/edit-modal.dto';

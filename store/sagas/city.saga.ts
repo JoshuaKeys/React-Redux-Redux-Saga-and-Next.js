@@ -3,9 +3,9 @@ import { FETCH_CITIES_SUCCESS, FETCH_CITIES_REQUEST, ADD_CITY_REQUEST, DELETE_CI
 import { CityDTO } from "../../dtos/city.dto";
 import { addCitySuccess, editCitySuccess } from "../actions/cities";
 
-export async function* fetchCitiesRequest() {
-    const cities = await fetch('http://localhost:3000/api/city');
-    const citiesData = await cities.json() as CityDTO[];
+export function* fetchCitiesRequest() {
+    const cities = yield fetch('http://localhost:3000/api/city');
+    const citiesData = yield cities.json() as CityDTO[];
 
     yield put({ type: FETCH_CITIES_SUCCESS, payload: citiesData });
 }
