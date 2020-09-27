@@ -49,7 +49,7 @@ export const selectionReducer = (state = initialState, action: any) => {
                 return lang;
             });
             languages[index].selected = true;
-            return { ...stateCopy, languages }
+            return { ...stateCopy, language: languages }
         }
 
         case SET_UNITS: {
