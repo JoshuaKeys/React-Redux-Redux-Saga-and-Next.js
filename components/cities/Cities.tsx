@@ -8,7 +8,7 @@ const Cities: FC<{ cities: CityDTO[] }> = ({ cities }) => {
     return <div className="cities">
         <div className="cities__container">
             <h1 className="cities__header">Cities</h1>
-            <CitiesInput mode="create" />
+            <CitiesInput />
             <ul className="cities__items">
                 {
                     cities.map(city => <li className="cities__item" key={city.id}><CityItem city={city} /></li>)
