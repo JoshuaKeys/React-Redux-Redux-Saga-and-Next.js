@@ -6,6 +6,7 @@ import { parse } from 'query-string';
 import Navbar from '../../components/navbar/Navbar';
 import './Overview.less';
 import Spinner from '../../components/spinner/Spinner';
+import Link from 'next/link';
 
 export default function CityName() {
     const selection = useSelector(state => state.selection);
@@ -14,34 +15,27 @@ export default function CityName() {
         main: null,
         name: ""
     })
+    const onDropDownChange = () => {
+        setWeather({
+            weather: null,
+            main: null,
+            name: ""
+        });
+        loadWeatherData(selection, router, weatherState, setWeather);
+    };
     const router = useRouter();
     useEffect(() => {
 
-        async function loadWeatherData() {
-            try {
-                const { units, lang } = selection;
-                const result = parse(router.asPath.substring(1));
-                console.log(result);
-                const name = router.query.cityName;
-                console.log(name);
-                const response = await fetch(`http://localhost:3000/api/city-weather?name=${name}&units=${units}&lang=${lang}`);
-                const data = await response.json();
-                console.log(data);
-                setWeather({ ...weatherState, weather: data.weather[0], main: data.main, name: data.name })
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        loadWeatherData()
+        loadWeatherData(selection, router, weatherState, setWeather);
     }, [router])
 
-    const displayedBlock = '';
     if (!weatherState.weather) {
         return <Spinner />;
     } else {
         return <div className="weather">
-            <Navbar />
+            <Navbar showDropdown={true} dropDownChanged={onDropDownChange} />
             <div className="weather__container">
+                <Link href="/"><button className="weather__details-btn">Back</button></Link>
                 <h1 className="weather__header">Weather in {weatherState.name}</h1>
                 <ul className="weather__details">
                     <li className="weather__details-item">
@@ -66,7 +60,19 @@ export default function CityName() {
             </div>
         </div>
     }
+}
 
-
-
+async function loadWeatherData(selection, router, weatherState, setWeather) {
+    try {
+        const { units, language } = selection;
+        const selectedUnits = units.find(unit => unit.selected === true)
+        const selectedLang = language.find(lang => lang.selected === true)
+        const result = parse(router.asPath.substring(1));
+        const name = router.query.cityName;
+        const response = await fetch(`http://localhost:3000/api/city-weather?name=${name}&units=${selectedUnits.title}&lang=${selectedLang.title}`);
+        const data = await response.json();
+        setWeather({ ...weatherState, weather: data.weather[0], main: data.main, name: data.name })
+    } catch (err) {
+        console.log(err);
+    }
 }

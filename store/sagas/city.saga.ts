@@ -33,7 +33,6 @@ export function* deleteCity(action) {
     yield put({ type: DELETE_CITY_FAILURE, payload: action.payload })
 }
 export function* editCity(action) {
-    console.log(action.payload);
     const updateRequest = yield fetch('http://localhost:3000/api/city', {
         method: 'PUT',
         body: JSON.stringify(action.payload),

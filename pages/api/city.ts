@@ -44,7 +44,6 @@ async function updateCity(req: NextApiRequest, res: NextApiResponse, db: Databas
     if (!city) {
       return res.status(400).json({ msg: 'City is required' })
     }
-    console.log(city, 'City')
     const cities = await db.run(`UPDATE City SET name='${city.name}' WHERE id = '${city.id}'`)
     if (cities.changes === 1) {
       return res.json(city);
@@ -59,7 +58,6 @@ async function updateCity(req: NextApiRequest, res: NextApiResponse, db: Databas
 async function fetchCities(req: NextApiRequest, res: NextApiResponse, db: Database) {
   try {
     const cities = await db.all('SELECT * FROM city');
-    console.log(cities);
     return res.json(cities)
   } catch (err) {
     res.status(500).send("Server Error")
@@ -72,7 +70,6 @@ async function addCity(req: NextApiRequest, res: NextApiResponse, db: Database) 
     if (!city) {
       res.status(400).json({ err: 'Bad Request' })
     }
-    console.log(city)
     const insertOp = await db.run(`INSERT INTO City (name) values ('${city.name}') `);
     const id = insertOp.lastID
     return res.json({ id, name: city.name })

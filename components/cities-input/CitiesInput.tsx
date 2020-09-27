@@ -4,7 +4,7 @@ import './CitiesInput.less'
 import { addCityRequest } from "../../store/actions/cities";
 
 
-const CitiesInput: FC<{ mode: 'edit' | 'create' }> = ({ mode }) => {
+const CitiesInput: FC = () => {
     const inputRef = useRef();
     const dispatch = useDispatch();
     return (
@@ -16,7 +16,6 @@ const CitiesInput: FC<{ mode: 'edit' | 'create' }> = ({ mode }) => {
 
         </div>
     )
-    // const display = mode === 'edit' ? 
 }
 
 export default CitiesInput;

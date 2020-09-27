@@ -11,7 +11,6 @@ export const cityReducer = (state = initialState, { type, payload }) => {
         case types.DELETE_CITY_SUCCESS:
             return state.filter(city => city.id !== payload.id);
         case types.ADD_CITY_SUCCESS:
-            console.log(payload)
             return [...state, payload];
         case types.EDIT_CITY_SUCCESS:
             const updatedState = [...state].map(city => {

@@ -24,7 +24,6 @@ export default function Home({ cities: citiesProps }) {
     dispatch(clearModal())
   }
   const updateCity = (city: CityDTO) => {
-    console.log(city);
     dispatch(editCityRequest(city));
     closeEditModal()
   }
@@ -37,8 +36,8 @@ export default function Home({ cities: citiesProps }) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div>
-        <Navbar />
+      <div className="container">
+        <Navbar showDropdown={false} />
         <Cities cities={cities.cities} />
       </div>
       {edit.city && <EditModal update={updateCity} editedCity={edit.city} clear={closeEditModal} />}

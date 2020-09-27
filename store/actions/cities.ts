@@ -25,7 +25,6 @@ export function deleteCitySuccess(city: CityDTO) {
     }
 }
 export function addCityRequest(name: string) {
-    console.log(name);
     return {
         type: ADD_CITY_REQUEST,
         payload: {
@@ -46,7 +45,6 @@ export function editCityRequest(city: CityDTO) {
     }
 }
 export function editCitySuccess(city: CityDTO) {
-    console.log(city);
     return {
         type: EDIT_CITY_SUCCESS,
         payload: city
