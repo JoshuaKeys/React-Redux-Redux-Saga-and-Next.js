@@ -1,4 +1,4 @@
-const withLess = require('@zeit/next-less');
+// const withLess = require('@zeit/next-less');
 const { resolve } = require('path');
 module.exports = withLess({
   webpack(config) {
