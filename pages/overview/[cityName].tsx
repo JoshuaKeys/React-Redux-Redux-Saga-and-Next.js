@@ -7,15 +7,26 @@ import Navbar from '../../components/navbar/Navbar';
 import './Overview.less';
 import Spinner from '../../components/spinner/Spinner';
 import Link from 'next/link';
+import { initializeStore } from '../../redux/store';
+import { loadWeatherData } from '../../helpers/load-weather-data';
 
-export default function CityName() {
-    const selection = useSelector(state => state.selection);
+export default function CityName({ weatherData }) {
     const [weatherState, setWeather] = useState({
         weather: null,
         main: null,
         name: "",
         country: "",
-    })
+    });
+    const router = useRouter();
+    const selection = useSelector(state => state.selection);
+
+    useEffect(() => {
+        if (!weatherData) {
+            setWeather({ weather: weatherData.weather[0], main: weatherData.main, name: weatherData.name, country: weatherData.sys.country });
+            return;
+        }
+        loadWeatherData(selection, router, weatherState, setWeather);
+    }, [])
     const onDropDownChange = () => {
         setWeather({
             weather: null,
@@ -23,17 +34,12 @@ export default function CityName() {
             name: "",
             country: ""
         });
+
         loadWeatherData(selection, router, weatherState, setWeather);
     };
-    const router = useRouter();
-    useEffect(() => {
-        loadWeatherData(selection, router, weatherState, setWeather);
-    }, [router])
 
-    if (!weatherState.weather) {
-        return <Spinner />;
-    } else {
-        return <div className="weather">
+    return !weatherState.weather ? <Spinner /> : (
+        <div className="weather">
             <Navbar showDropdown={true} dropDownChanged={onDropDownChange} />
             <div className="weather__container">
                 <Link href="/"><button className="weather__details-btn">Back</button></Link>
@@ -68,21 +74,17 @@ export default function CityName() {
 
             </div>
         </div>
-    }
+    )
 }
-
-async function loadWeatherData(selection, router, weatherState, setWeather) {
-    try {
-        const { units, language } = selection;
-        const selectedUnits = units.find(unit => unit.selected === true)
-        const selectedLang = language.find(lang => lang.selected === true)
-        const result = parse(router.asPath.substring(1));
-        const name = router.query.cityName;
-        const response = await fetch(`http://localhost:3000/api/city-weather?name=${name}&units=${selectedUnits.title}&lang=${selectedLang.title}`);
-        const data = await response.json();
-        setWeather({ ...weatherState, weather: data.weather[0], main: data.main, name: data.name, country: data.sys.country })
-    } catch (err) {
-        console.log(err);
-        setWeather({ weather: [], main: null, name: null, country: "" })
-    }
+export async function getServerSideProps(context) {
+    const urlArr = context.req.url.split('/');
+    const cityName = urlArr[urlArr.length - 1];
+    const reduxStore = initializeStore();
+    const { selection } = reduxStore.getState();
+    const { units, language } = selection;
+    const selectedUnits = units.find(unit => unit.selected === true)
+    const selectedLang = language.find(lang => lang.selected === true)
+    const response = await fetch(`http://localhost:3000/api/city-weather?name=${cityName}&units=${selectedUnits.title}&lang=${selectedLang.title}`);
+    const weatherData = await response.json();
+    return { props: { weatherData } }
 }

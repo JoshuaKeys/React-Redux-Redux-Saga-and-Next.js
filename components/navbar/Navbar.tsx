@@ -3,7 +3,8 @@ import Dropdown from '../dropdown/Dropdown';
 import { DropdownDTO } from '../../dtos/dropdown.dto';
 import { useState, FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUnits, setLanguage } from '../../store/actions/selection';
+import { setUnits, setLanguage } from '../../redux/sagas/selection';
+
 
 const Navbar: FC<{ showDropdown: boolean, dropDownChanged?: () => void }> = ({ showDropdown, dropDownChanged }) => {
     const { units, language } = useSelector(state => state.selection);

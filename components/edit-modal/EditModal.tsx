@@ -19,7 +19,6 @@ const EditModal: FC<{ editedCity: CityDTO, update: (city: CityDTO) => void, clea
                         <input type="text" value={editState.name} onChange={e => updateEditState({ ...editState, name: e.target.value })} className="edit-modal__input" />
                         <button className="edit-modal__submit-btn" onClick={() => update(editState)}>Update</button>
                     </div>
-
                 </div>
             </div>
         </div>

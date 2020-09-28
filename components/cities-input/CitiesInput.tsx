@@ -1,7 +1,7 @@
 import { FC, useRef, useState } from "react";
 import { useDispatch } from 'react-redux';
 import './CitiesInput.less'
-import { addCityRequest } from "../../store/actions/cities";
+import { addCityRequest } from "../../redux/actions/cities";
 
 
 const CitiesInput: FC = () => {

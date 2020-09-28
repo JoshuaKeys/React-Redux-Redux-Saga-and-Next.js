@@ -4,7 +4,7 @@ import Cities from '../components/cities/Cities';
 import { GetServerSideProps } from 'next';
 import { CityDTO } from '../dtos/city.dto';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCitiesSuccess, clearModal, editCityRequest, fetchCitiesRequest } from '../store/actions/cities';
+import { fetchCitiesSuccess, clearModal, editCityRequest, fetchCitiesRequest } from '../redux/actions/cities';
 import { useEffect } from 'react';
 
 import { CityStateDTO } from '../dtos/city-state.dto';
@@ -61,4 +61,4 @@ export const getServerSideProps: GetServerSideProps<{ cities: CityDTO[] }> = asy
       cities: citiesData
     }
   }
-}
+};

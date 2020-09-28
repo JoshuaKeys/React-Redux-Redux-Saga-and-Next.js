@@ -1,15 +1,11 @@
 import { FC } from "react";
 import { CityDTO } from "../../dtos/city.dto";
-import city from "../../pages/api/city";
 import './CityItem.less'
-import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from "@fortawesome/fontawesome-svg-core";
 import Link from 'next/link'
-import { deleteCityRquest, initEdit } from "../../store/actions/cities";
+import { deleteCityRquest, initEdit } from "../../redux/actions/cities";
 import { useDispatch } from 'react-redux'
 
-library.add(faTrash, faPen);
+
 
 const CityItem: FC<{ city: CityDTO }> = ({ city }) => {
     const dispatch = useDispatch();
